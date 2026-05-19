@@ -1,0 +1,150 @@
+/* options.css */
+body {
+    padding: 20px;
+    font-family: sans-serif; /* Use browser default fonts */
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.settings-section {
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 60px;
+}
+
+
+.form-group small {
+    display: block;
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 3px;
+}
+
+hr {
+    margin: 25px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.form-actions {
+    text-align: right;
+}
+
+button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+    /* Use system UI fonts and colors where possible */
+    font: inherit;
+    color: inherit;
+    background-color: #f0f0f0; /* Light grey, often blends well */
+}
+
+button:hover {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+button#save-btn {
+    background-color: #007bff; /* A common primary button color */
+    color: white;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+button#save-btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+
+button#add-prompt-btn {
+    margin-top: 10px;
+    display: block; /* Make it full width in its container */
+    margin-left: 0;
+}
+
+.status-message {
+    display: inline-block; /* Keep it on the same line as the button */
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.status-message.success {
+    color: green;
+}
+
+.status-message.error {
+    color: red;
+}
+
+
+/* Prompt Entry Styling */
+#prompts-list {
+    margin-top: 15px;
+}
+
+.prompt-entry {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    position: relative; /* For positioning the remove button */
+}
+
+.prompt-entry .form-group {
+    margin-bottom: 10px;
+}
+
+.prompt-entry label {
+    font-weight: normal; /* Less emphasis than section labels */
+    font-size: 0.9em;
+}
+
+.remove-prompt-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f8d7da; /* Light red */
+    color: #721c24; /* Dark red */
+    border: 1px solid #f5c6cb;
+    padding: 3px 8px;
+    font-size: 0.8em;
+}
+
+.remove-prompt-btn:hover {
+    background-color: #f1b0b7;
+    border-color: #ee9a9a;
+}

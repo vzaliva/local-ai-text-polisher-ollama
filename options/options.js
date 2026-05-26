@@ -49,10 +49,18 @@ async function loadSettings() {
     // Use the same defaults as in background.js for consistency
     const result = await browser.storage.local.get({
         ollamaUrl: "http://localhost:11434",
-        ollamaModel: "llama3",
+        ollamaModel: "gemma3-polish",
         customPrompts: [
-            { id: "prompt-formal", name: "Make Formal", text: "Rewrite the following text in a more formal tone:\n\n{TEXT}" },
-            { id: "prompt-concise", name: "Make Concise", text: "Summarize the key points of the following text concisely:\n\n{TEXT}" },
+            {
+                id: "prompt-email-formal",
+                name: "Email (formal)",
+                text: "You are my proofreader. I write in British English. I would like the style of my emails to be business-like but not overly formal. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
+            },
+            {
+                id: "prompt-email-informal",
+                name: "Email (informal)",
+                text: "You are my proofreader. I write in British English. I would like the style of my emails to be casual and collegial and not overly formal. Minimize unnecessary pleasantries. But stay away from the slang and overly informal expressions. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
+            },
         ]
     });
 

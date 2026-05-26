@@ -25,7 +25,7 @@ Temporary add-ons are unloaded when Firefox closes. For a persistent install, pa
 2. Right-click and choose **AI Polish Text → \<your prompt\>**.
 3. A notification shows progress; on success the polished text is on your clipboard.
 
-Prompts are templates with a `{TEXT}` placeholder. Two examples ship by default (*Make Formal*, *Make Concise*); add or edit your own in **Preferences**.
+Prompts are system instructions sent to Ollama's chat API; your selection is the user message. Two email prompts ship by default (*Email (formal)*, *Email (informal)*); add or edit your own in **Preferences**.
 
 ## Configuration
 
@@ -33,7 +33,7 @@ All settings live in the extension's options page (`about:addons` → this exten
 
 - **Ollama API URL** — base URL of your Ollama server. Saving a non-localhost URL will prompt for host permission.
 - **Ollama Model Name** — must match a model already pulled in Ollama (`ollama list`).
-- **Custom Prompts** — name + template pairs. Use `{TEXT}` where the selected text should be inserted.
+- **Custom Prompts** — name + system-instruction pairs. The highlighted text is sent separately as the user message.
 
 ## Permissions
 

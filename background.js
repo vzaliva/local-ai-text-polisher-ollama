@@ -3,7 +3,7 @@
 // --- Constants ---
 const CONTEXT_MENU_ID = "ollama-polish-parent";
 const DEFAULT_OLLAMA_URL = "http://localhost:11434"; // Default Ollama URL
-const DEFAULT_OLLAMA_MODEL = "phi4:latest"; // Default model
+const DEFAULT_OLLAMA_MODEL = "gemma3-polish"; // Default model
 
 // --- Storage Helper ---
 async function getSettings() {
@@ -11,9 +11,17 @@ async function getSettings() {
     const result = await browser.storage.local.get({
       ollamaUrl: DEFAULT_OLLAMA_URL,
       ollamaModel: DEFAULT_OLLAMA_MODEL,
-      customPrompts: [ // Default example prompts
-        { id: "prompt-formal", name: "Make Formal", text: "Rewrite the following text in a more formal tone:\n\n{TEXT}" },
-        { id: "prompt-concise", name: "Make Concise", text: "Summarize the key points of the following text concisely:\n\n{TEXT}" },
+      customPrompts: [
+        {
+          id: "prompt-email-formal",
+          name: "Email (formal)",
+          text: "You are my proofreader. I write in British English. I would like the style of my emails to be business-like but not overly formal. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
+        },
+        {
+          id: "prompt-email-informal",
+          name: "Email (informal)",
+          text: "You are my proofreader. I write in British English. I would like the style of my emails to be casual and collegial and not overly formal. Minimize unnecessary pleasantries. But stay away from the slang and overly informal expressions. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
+        },
       ]
     });
     // Ensure URL doesn't end with a slash for consistency
@@ -60,10 +68,21 @@ async function getSettings() {
   }
   
   // --- Ollama API Interaction ---
+  function buildChatMessages(promptTemplate, selectedText) {
+    // Legacy prompts may still contain {TEXT}; strip it — selection is always the user message.
+    const systemContent = promptTemplate.replace(/\{TEXT\}/g, '').trim();
+    const messages = [];
+    if (systemContent) {
+      messages.push({ role: 'system', content: systemContent });
+    }
+    messages.push({ role: 'user', content: selectedText });
+    return messages;
+  }
+
   async function polishTextWithOllama(text, promptTemplate, settings) {
-    const apiUrl = `${settings.ollamaUrl}/api/generate`;
+    const apiUrl = `${settings.ollamaUrl}/api/chat`;
     const model = settings.ollamaModel;
-    const fullPrompt = promptTemplate.replace('{TEXT}', text); // Inject selected text
+    const messages = buildChatMessages(promptTemplate, text);
   
     // Show "Polishing..." notification
     const polishingNotificationId = await browser.notifications.create({
@@ -83,8 +102,8 @@ async function getSettings() {
         },
         body: JSON.stringify({
           model: model,
-          prompt: fullPrompt,
-          stream: false // Get the full response at once
+          messages: messages,
+          stream: false
         }),
       });
   
@@ -98,8 +117,8 @@ async function getSettings() {
   
       const data = await response.json();
   
-      if (data.response) {
-        return data.response.trim(); // Return the polished text
+      if (data.message?.content) {
+        return data.message.content.trim();
       } else if (data.error) {
           // Handle cases where Ollama returns a JSON error object
           console.error("Ollama returned an error object:", data.error);

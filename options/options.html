@@ -19,14 +19,14 @@
             </div>
             <div class="form-group">
                 <label for="ollama-model">Ollama Model Name:</label>
-                <input type="text" id="ollama-model" placeholder="e.g., llama3" required>
+                <input type="text" id="ollama-model" placeholder="e.g., gemma3-polish" required>
                 <small>The name of the model to use (must be available in Ollama).</small>
             </div>
         </section>
 
         <section class="settings-section">
             <h2>Custom Prompts</h2>
-            <p>Define the prompts that appear in the right-click menu. Use <code>{TEXT}</code> where the highlighted text should be inserted.</p>
+            <p>Define the prompts that appear in the right-click menu. Each prompt is sent as the <strong>system</strong> message; your text selection is sent as the <strong>user</strong> message.</p>
             <div id="prompts-list">
                 </div>
             <button type="button" id="add-prompt-btn">Add New Prompt</button>
@@ -47,7 +47,7 @@
         </div>
         <div class="form-group">
             <label>Prompt Template:</label>
-            <textarea class="prompt-text" rows="3" placeholder="e.g., Rewrite the following text in a more formal tone:\n\n{TEXT}" required></textarea>
+            <textarea class="prompt-text" rows="3" placeholder="e.g., Rewrite the user's text in a more formal tone. Reply with only the rewritten text — no commentary." required></textarea>
         </div>
         <button type="button" class="remove-prompt-btn">Remove</button>
     </div>

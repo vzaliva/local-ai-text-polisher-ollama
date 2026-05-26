@@ -21,7 +21,7 @@ There is no build, lint, or test tooling — this is a plain Manifest V3 WebExte
 
 - **Load for development**: `about:debugging#/runtime/this-firefox` → "Load Temporary Add-on" → pick `manifest.json`. The extension is unloaded when Firefox closes.
 - **Reload after edits**: hit the "Reload" button on the same page. Background-script changes do not hot-reload.
-- **Package an `.xpi`**: `cd` into the repo root and `zip -r ../extension.xpi manifest.json background.js options icons -x '*.DS_Store'`. Self-signed `.xpi` files only install in Firefox Developer Edition / Nightly with `xpinstall.signatures.required=false`, or via `web-ext sign` against an AMO account.
+- **Package an `.xpi`**: `cd` into the repo root and `zip -r ../extension.xpi manifest.json background.js defaults.js options icons -x '*.DS_Store'`. Self-signed `.xpi` files only install in Firefox Developer Edition / Nightly with `xpinstall.signatures.required=false`, or via `web-ext sign` against an AMO account.
 - **Inspect background-script logs**: same debugging page → "Inspect" next to the loaded extension. `console.log`s from `background.js` go there, not to the page devtools.
 - **Ollama**: requires a running Ollama server (defaults to `http://localhost:11434`) with the configured model pulled (`ollama pull <model>`).
 
@@ -44,7 +44,7 @@ Menu submenu items use the prompt's `id` field as the menu item ID. `background.
 These exist in the imported v1.0 source and may be worth fixing intentionally rather than tripping over:
 
 - `background.js` references `icons/icon-48.png` for notification icons, but only `icons/icon-48.svg` and `icons/icon-96.svg` exist. Notifications render without an icon.
-- Default model differs between contexts: `background.js` defaults to `phi4:latest`, `options.js` defaults to `llama3`. The background default wins for first-run users because settings are pulled from `getSettings()` there.
+- ~~Default model differs between contexts~~ (resolved): default settings — Ollama URL, model, and the seed prompts — now live in a single `defaults.js` (`DEFAULT_SETTINGS`), loaded as a classic script before both `background.js` (via `manifest.json` `background.scripts`) and `options.js` (via a `<script>` in `options/options.html`). Both contexts call `browser.storage.local.get(DEFAULT_SETTINGS)`, so they can no longer drift. Keep `defaults.js` first in the background scripts array and in the `.xpi` package.
 - `manifest.json` ships with the placeholder gecko id `ai-text-polisher-ollama@yourdomain.com` — change this before publishing the fork.
 
 ## Permissions model

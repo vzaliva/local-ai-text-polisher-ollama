@@ -2,28 +2,14 @@
 
 // --- Constants ---
 const CONTEXT_MENU_ID = "ollama-polish-parent";
-const DEFAULT_OLLAMA_URL = "http://localhost:11434"; // Default Ollama URL
-const DEFAULT_OLLAMA_MODEL = "gemma3-polish"; // Default model
+// Default settings live in defaults.js (DEFAULT_SETTINGS), loaded before this
+// script via manifest.json's background.scripts array and shared verbatim with
+// the options page.
 
 // --- Storage Helper ---
 async function getSettings() {
-    // Retrieve settings from storage, providing defaults if not set
-    const result = await browser.storage.local.get({
-      ollamaUrl: DEFAULT_OLLAMA_URL,
-      ollamaModel: DEFAULT_OLLAMA_MODEL,
-      customPrompts: [
-        {
-          id: "prompt-email-formal",
-          name: "Email (formal)",
-          text: "You are my proofreader. I write in British English. I would like the style of my emails to be business-like but not overly formal. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
-        },
-        {
-          id: "prompt-email-informal",
-          name: "Email (informal)",
-          text: "You are my proofreader. I write in British English. I would like the style of my emails to be casual and collegial and not overly formal. Minimize unnecessary pleasantries. But stay away from the slang and overly informal expressions. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
-        },
-      ]
-    });
+    // Retrieve settings from storage, falling back to the shared defaults.
+    const result = await browser.storage.local.get(DEFAULT_SETTINGS);
     // Ensure URL doesn't end with a slash for consistency
     if (result.ollamaUrl.endsWith('/')) {
         result.ollamaUrl = result.ollamaUrl.slice(0, -1);

@@ -46,23 +46,9 @@ function addPromptEntry(prompt = { id: '', name: '', text: '' }) {
 
 async function loadSettings() {
     console.log("Loading settings...");
-    // Use the same defaults as in background.js for consistency
-    const result = await browser.storage.local.get({
-        ollamaUrl: "http://localhost:11434",
-        ollamaModel: "gemma3-polish",
-        customPrompts: [
-            {
-                id: "prompt-email-formal",
-                name: "Email (formal)",
-                text: "You are my proofreader. I write in British English. I would like the style of my emails to be business-like but not overly formal. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
-            },
-            {
-                id: "prompt-email-informal",
-                name: "Email (informal)",
-                text: "You are my proofreader. I write in British English. I would like the style of my emails to be casual and collegial and not overly formal. Minimize unnecessary pleasantries. But stay away from the slang and overly informal expressions. The text I send may include quoted earlier messages (usually lines prefixed with >). Use quoted lines only as context; never edit them. Brush up only my new reply. Output my corrected reply together with any quoted lines, leaving quoted text exactly unchanged."
-            },
-        ]
-    });
+    // Defaults come from the shared defaults.js (DEFAULT_SETTINGS), loaded
+    // before this script in options.html so both contexts stay in sync.
+    const result = await browser.storage.local.get(DEFAULT_SETTINGS);
 
     console.log("Settings loaded:", result);
     ollamaUrlInput.value = result.ollamaUrl;

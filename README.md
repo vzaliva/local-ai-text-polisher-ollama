@@ -25,7 +25,7 @@ Temporary add-ons are unloaded when Firefox closes. For a persistent install, pa
 2. Right-click and choose **AI Polish Text → \<your prompt\>**.
 3. A notification shows progress; on success the polished text is on your clipboard.
 
-Prompts are system instructions sent to Ollama's chat API; your selection is the user message. Two email prompts ship by default (*Email (formal)*, *Email (informal)*); add or edit your own in **Preferences**.
+Prompts are system instructions sent to Ollama's chat API; your selection is the user message. Three email prompts ship by default; add or edit your own in **Preferences**.
 
 ## Configuration
 

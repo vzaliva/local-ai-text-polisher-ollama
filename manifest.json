@@ -29,7 +29,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "ai-text-polisher-ollama@yourdomain.com",
+      "id": "ai-text-polisher-ollama@crocodile.org",
       "strict_min_version": "109.0"
     }
   }

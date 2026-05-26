@@ -1,6 +1,6 @@
 # Local AI Text Polisher (Ollama)
 
-A Firefox extension that polishes selected text through a locally-running [Ollama](https://ollama.com/) server. Highlight text on any page, pick a prompt from the right-click menu, and the polished result is copied to your clipboard.
+A Firefox extension that polishes selected text through a locally-running [Ollama](https://ollama.com/) server. Highlight text on any page, pick a prompt from the right-click menu, and review the result in a before/after popup where you can replace the original in place or copy it to the clipboard.
 
 This repository is a fork of the [AMO extension of the same name](https://addons.mozilla.org/en-US/firefox/addon/local-ai-text-polisher-ollama/) (GPL-3.0). The first commit is the canonical v1.0 source extracted from the published `.xpi`.
 
@@ -23,7 +23,7 @@ Temporary add-ons are unloaded when Firefox closes. For a persistent install, pa
 
 1. Select some text on any web page.
 2. Right-click and choose **AI Polish Text → \<your prompt\>**.
-3. A notification shows progress; on success the polished text is on your clipboard.
+3. A popup opens immediately showing your original text and a progress message while the model runs. When it finishes, the popup shows the polished text (editable) with three buttons: **Cancel**, **Copy to clipboard**, and **Replace**. **Replace** swaps the polished text into the original selection — it is enabled only when the selection is in an editable field (textarea, input, or a contenteditable box); for plain page text use **Copy to clipboard** instead. Errors (e.g. Ollama not running) are shown in the same popup.
 
 Prompts are system instructions sent to Ollama's chat API; your selection is the user message. Three email prompts ship by default; add or edit your own in **Preferences**.
 
@@ -39,8 +39,8 @@ All settings live in the extension's options page (`about:addons` → this exten
 
 - `contextMenus`, `notifications` — right-click menu and progress/result notifications.
 - `storage` — saving settings and prompts.
-- `clipboardWrite` + `scripting` — used together to write the polished text to the clipboard via an injected snippet in the active tab.
-- `<all_urls>` host permission — so the extension's content-script clipboard injection works on any page where you select text. The Ollama URL itself is granted dynamically when you save settings.
+- `clipboardWrite` + `scripting` — `scripting` injects the review popup into the page; `clipboardWrite` backs its **Copy to clipboard** button.
+- `<all_urls>` host permission — so the popup can be injected (and the original selection replaced) on any page where you select text. The Ollama URL itself is granted dynamically when you save settings.
 
 ## Working on this repo with AI assistants
 

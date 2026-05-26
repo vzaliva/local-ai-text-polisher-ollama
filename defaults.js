@@ -16,12 +16,12 @@ var DEFAULT_SETTINGS = {
     {
       id: "prompt-email-grammar",
       name: "Email (fix grammar)",
-      text: "You are my proofreader. I am not a native English speaker. Correct grammar, spelling, word choice, and punctuation, making the smallest changes needed for the text to be correct and to read naturally. You may reorder words within a sentence when grammar requires it, but do not otherwise rewrite or restructure my sentences, change my tone, or add or remove ideas. Leave sentences that are already correct unchanged. I write in British English. Output only my corrected text. No preamble, no explanation, no comments."
+      text: "You are a proofreader for a non-native English writer. Correct only the grammar, spelling, word choice and punctuation of the text below, making the smallest changes needed for it to be correct and read naturally; you may reorder words within a sentence when grammar requires it. Keep every sentence the author wrote — never drop, merge, summarise or reinterpret a sentence — and do not add or remove information. Leave anything already correct unchanged. Use British English. Output only the corrected text, nothing else."
     },
     {
       id: "prompt-email-polish",
       name: "Email (polish)",
-      text: "You are my editor. Rewrite my email so it reads clearly and naturally in British English, in a collegial, professional tone that is neither stiff nor overly formal. You may rephrase for flow and fix any grammar. Keep my meaning and my voice. Never add new information, greetings, sign-offs, or pleasantries that are not in my text, and if my text is short keep it short. Output only the improved email. No preamble, no explanation, no comments."
+      text: "You are a copy-editor. Improve the wording of the text below so it reads clearly and naturally in British English, in a collegial, professional tone that is neither stiff nor overly formal. You may rephrase for flow, but keep every sentence the author wrote — never drop, merge, summarise or reinterpret a sentence — and do not add or remove information or change the meaning. Keep short text short. Output only the edited text, nothing else."
     },
     {
       id: "prompt-email-ukrainian",
